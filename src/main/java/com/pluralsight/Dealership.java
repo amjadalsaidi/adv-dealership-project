@@ -2,12 +2,14 @@ package com.pluralsight;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Dealership {
     private String name;
     private String address;
     private String phone;
     private ArrayList<Vehicle> inventory;
+    Scanner scanner =  new Scanner(System.in);
 
     public Dealership(String name, String address, String phone) {
         this.name = name;
@@ -111,4 +113,35 @@ public class Dealership {
     public void removeVehicle(Vehicle vehicle) {
         inventory.remove(vehicle);
     }
+
+    public Vehicle getVehiclesByVinNumber(int vin) {
+        List<Vehicle> sellingVehicle = new ArrayList<>();
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getVin() == vin) {
+                sellingVehicle.add(vehicle);
+                System.out.println("Vehicle found successfully!");
+                return sellingVehicle.get(0);
+            }
+        }
+        System.out.println("Wrong vin number, enter vaild vin number: !");
+        vin = scanner.nextInt();
+        return getVehiclesByVinNumber(vin) ;
+    }
+
+
+
+    public void ProcessSaleContract (String date, String name, String email , Vehicle  sellingVehicle){
+
+        SalesContract salesContract = new SalesContract(date, name, email, sellingVehicle);
+        ContractFileManager contractFileManager = new ContractFileManager();
+        contractFileManager.saveContract(salesContract);
+    }
+
+    public void ProcessLeaseContract (String date, String name, String email , Vehicle  sellingVehicle){
+
+        LeaseContract leaseContract = new LeaseContract(date, name, email, sellingVehicle);
+        ContractFileManager contractFileManager = new ContractFileManager();
+        contractFileManager.saveContract(leaseContract);
+    }
+
 }

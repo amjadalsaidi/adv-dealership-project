@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,6 +27,7 @@ public class UserInterface {
             System.out.println("7. Get all vehicles");
             System.out.println("8. Add vehicle");
             System.out.println("9. Remove vehicle");
+            System.out.println("10. SELL/LEASE a vehicle");
             System.out.println("99. Quit");
 
             System.out.print("Enter your choice: ");
@@ -59,6 +61,8 @@ public class UserInterface {
                 case "9":
                     processRemoveVehicleRequest();
                     break;
+                case "10":
+                    processAddVehicleContractRequest();
                 case "99":
                     quit = true;
                     break;
@@ -67,6 +71,58 @@ public class UserInterface {
             }
         }
     }
+
+    private void processAddVehicleContractRequest() {
+        System.out.println("Please enter the following information for your contract: ");
+        System.out.println("Are you Selling or Leasing, enter 1 for selling and 2 for leasing: ");
+        int option  = scanner.nextInt();
+
+
+        while (option != 1 && option != 2) {
+            System.out.println("Wrong entery, please enter 1 for selling and 2 for leasing: ");
+            option = scanner.nextInt();
+        }
+
+
+            if (option == 1) {
+                scanner.nextLine();
+                System.out.println("Enter name: ");
+                String name = scanner.nextLine();
+                System.out.println("Enter email: ");
+                String email = scanner.nextLine();
+                String date = LocalDateTime.now().toString();
+                System.out.println("Enter the vin number that you are selling: ");
+                int vin = scanner.nextInt();
+                Vehicle vehicle = dealership.getVehiclesByVinNumber(vin);
+//                displayVehicles(vehicle);
+                dealership.ProcessSaleContract(date, name, email, vehicle);
+                dealership.removeVehicle(vehicle);
+
+
+
+                //vehicleExist = true;
+            } else if (option == 2) {
+
+                scanner.nextLine();
+                System.out.println("Enter name: ");
+                String name = scanner.nextLine();
+                System.out.println("Enter email: ");
+                String email = scanner.nextLine();
+                String date = LocalDateTime.now().toString();
+                System.out.println("Enter the vin number that you are leasing: ");
+                int vin = scanner.nextInt();
+                Vehicle vehicle = dealership.getVehiclesByVinNumber(vin);
+//                displayVehicles(vehicle);
+                dealership.ProcessLeaseContract(date, name, email, vehicle);
+                dealership.removeVehicle(vehicle);
+            }
+
+
+
+        }
+
+
+
 
     public void processGetByPriceRequest() {
         System.out.print("Enter minimum price: ");
