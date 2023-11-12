@@ -1,3 +1,4 @@
+This is my contract class which is the parent (abstract)
 ![Contract .png](Contract%20.png)
 ![LeaseContract.png](LeaseContract.png)
 ![SaleContract.png](SaleContract.png)
